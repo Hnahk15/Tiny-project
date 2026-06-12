@@ -16,15 +16,18 @@
 3. Compile:
 
 **Linux / macOS:**
-bash
+'''bash'''
 
 make
+
 ./ecommerce
 
 
 **Windows (CMD):**
 cmd
 g++ -std=c++17 -o ecommerce.exe main.cpp Product.cpp Cart.cpp Order.cpp User.cpp Customer.cpp Admin.cpp RecommendationEngine.cpp FileManager.cpp ECommerceSystem.cpp
+
+Then:
 ecommerce.exe
 
 
