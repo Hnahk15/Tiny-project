@@ -20,17 +20,27 @@ If make is not available, run:
 
 Bash
 g++ -std=c++17 -Wall -O2 -o project1 src/Vector.cpp src/Matrix.cpp src/LinearSystem.cpp src/LinearRegression.cpp src/main.cpp
+
 Run the program with the data file:
+
+Linux / macOS:
 
 Bash
 ./project1 data/machine.data
+Windows (CMD):
+
+Bash
+project1.exe data/machine.data
+
+
+
 Project 2 - Smart E-Commerce System
 Open terminal in VS Code (Ctrl + ~) and ensure you are in the Tiny-project directory.
 
 Navigate to the project2 directory:
 
 Bash
-cd "project 2"
+cd "project2"
 Compile and run the program:
 
 Linux / macOS:
@@ -38,12 +48,20 @@ Linux / macOS:
 Bash
 make
 ./ecommerce
+
 Windows (CMD):
 
 Bash
 g++ -std=c++17 -o ecommerce.exe main.cpp Product.cpp Cart.cpp Order.cpp User.cpp Customer.cpp Admin.cpp RecommendationEngine.cpp FileManager.cpp ECommerceSystem.cpp
-./ecommerce.exe
+
+ecommerce.exe
 💡 If g++ not recognized error occurs: find the path to g++.exe on your system and replace it.
+
+where g++
+
+or
+
+Get-ChildItem -Path C:\,D:\ -Recurse -Filter "g++.exe" -ErrorAction SilentlyContinue 2>$null | Select-Object FullName
 
 Default login — Admin: admin / admin123
 
