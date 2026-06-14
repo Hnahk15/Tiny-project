@@ -1,7 +1,7 @@
 
 # Tiny Projects - OOP C++
 
-This is the tiny project of group of 4 students:
+This is the tiny project for PROGRAMMING 2 of group of 4 students:
 - Nguyễn Thịnh Khang - 104240426
 - Nguyễn Đình Trí - 104240733 
 - Nguyễn Duy Khánh - 104240632
