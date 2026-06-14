@@ -1,68 +1,40 @@
-# Tiny Projects - OOP C++
+# How to run Projects
+Clone the repo using this command:
 
-Open terminal in VS Code (`Ctrl + ~`) and navigate to the project directory:
 ```bash
-cd "Tiny-project"
-Project 1 - Linear System
-Open terminal in VS Code (Ctrl + ~) and ensure you are in the Tiny-project directory.
+git clone https://github.com/Hnahk15/Tiny-project.git
+cd Tiny-project
+```
 
-Navigate to the project1 directory:
+### Project 1 
+To run project 1, type in these commands:
 
-Bash
-cd "project1"
-Compile the project:
+Change directory to project1 folder:
+`
+cd project1
+`
 
-If make is available, run:
+Run this command line:
 
-Bash
-make
-If make is not available, run:
+```bash
+g++ -std=c++17 -Wall -Wextra -O2 -I include -o project1 src/Vector.cpp src/Matrix.cpp src/LinearSystem.cpp src/LinearRegression.cpp src/main.cpp
 
-Bash
-g++ -std=c++17 -Wall -O2 -o project1 src/Vector.cpp src/Matrix.cpp src/LinearSystem.cpp src/LinearRegression.cpp src/main.cpp
-
-Run the program with the data file:
-
-Linux / macOS:
-
-Bash
 ./project1 data/machine.data
-Windows (CMD):
+```
 
-Bash
-project1.exe data/machine.data
+### Project 2
+To run project 2, type in these commands:
 
+Change directory to project2 folder:
 
+`
+cd project2
+`
 
-Project 2 - Smart E-Commerce System
-Open terminal in VS Code (Ctrl + ~) and ensure you are in the Tiny-project directory.
+Run this command line:
 
-Navigate to the project2 directory:
+```bash
+g++ -std=c++17 -I include -o ecommerce.exe src/main.cpp src/Product.cpp src/Cart.cpp src/Order.cpp src/User.cpp src/Customer.cpp src/Admin.cpp src/RecommendationEngine.cpp src/FileManager.cpp src/ECommerceSystem.cpp
 
-Bash
-cd "project2"
-Compile and run the program:
-
-Linux / macOS:
-
-Bash
-make
-./ecommerce
-
-Windows (CMD):
-
-Bash
-g++ -std=c++17 -o ecommerce.exe main.cpp Product.cpp Cart.cpp Order.cpp User.cpp Customer.cpp Admin.cpp RecommendationEngine.cpp FileManager.cpp ECommerceSystem.cpp
-
-ecommerce.exe
-💡 If g++ not recognized error occurs: find the path to g++.exe on your system and replace it.
-
-where g++
-
-or
-
-Get-ChildItem -Path C:\,D:\ -Recurse -Filter "g++.exe" -ErrorAction SilentlyContinue 2>$null | Select-Object FullName
-
-Default login — Admin: admin / admin123
-
-Or select Register to create a new account.
+./ecommerce.exe
+```
