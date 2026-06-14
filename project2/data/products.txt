@@ -1,5 +1,5 @@
 1|Laptop Pro 15|Electronics|1299.99|15|0|0
-2|Wireless Mouse|Electronics|29.99|50|0|0
+2|Wireless Mouse|Electronics|29.99|49|1|1
 3|Mechanical Keyboard|Electronics|89.99|25|0|0
 4|USB-C Hub|Electronics|39.99|40|0|0
 5|C++ Programming Book|Books|49.99|30|1|0
