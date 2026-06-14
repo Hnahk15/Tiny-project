@@ -1,3 +1,0 @@
-1|admin|admin|admin123|Administrator
-2|customer|Thanh Phu|1234|Nguyen Thanh Phu
-3|customer|Khanh|123|R?n d?c Duy Kh nh
