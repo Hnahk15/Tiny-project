@@ -104,8 +104,8 @@ Matrix Matrix::operator*(const Matrix& other) const {
     Matrix result(mNumRows, other.mNumCols);
     for (int i = 0; i < mNumRows; ++i) // duyệt từng hàng của ma trận đầu tiên
         for (int j = 0; j < other.mNumCols; ++j) // duyệt từng cột của ma trận thứ hai
-            for (int k = 0; k < mNumCols; ++k)
-                result.mData[i][j] += mData[i][k] * other.mData[k][j];
+            for (int k = 0; k < mNumCols; ++k) // duyệt từng phần tử trong hàng i của ma trận đầu tiên và cột j của ma trận thứ hai để tính tích vô hướng
+                result.mData[i][j] += mData[i][k] * other.mData[k][j]; // tích vô hướng
     return result;
 }
 
@@ -114,7 +114,7 @@ Matrix Matrix::operator*(double scalar) const {
     Matrix result(mNumRows, mNumCols);
     for (int i = 0; i < mNumRows; ++i)
         for (int j = 0; j < mNumCols; ++j)
-            result.mData[i][j] = mData[i][j] * scalar;
+            result.mData[i][j] = mData[i][j] * scalar; // nhân từng phần tử của ma trận với scalar và lưu vào result
     return result;
 }
 
@@ -122,10 +122,10 @@ Matrix Matrix::operator*(double scalar) const {
 Vector Matrix::operator*(const Vector& v) const {
     assert(mNumCols == v.GetSize());
     Vector result(mNumRows);
-    for (int i = 0; i < mNumRows; ++i) {
+    for (int i = 0; i < mNumRows; ++i) { // duyệt từng row
         double sum = 0.0;
         for (int j = 0; j < mNumCols; ++j)
-            sum += mData[i][j] * v[j];
+            sum += mData[i][j] * v[j]; // tích vô hướng giữa row i của ma trận và vector v
         result[i] = sum;
     }
     return result;
@@ -148,22 +148,22 @@ double Matrix::Determinant() const {
     assert(mNumRows == mNumCols);  // must be square
     int n = mNumRows;
 
-    if (n == 1) return mData[0][0];
-    if (n == 2) return mData[0][0]*mData[1][1] - mData[0][1]*mData[1][0];
+    if (n == 1) return mData[0][0]; // nếu là matrix 1x1 thì det là chính nó
+    if (n == 2) return mData[0][0]*mData[1][1] - mData[0][1]*mData[1][0]; // nếu là 2x2 thì det = ad - bc
 
     // General: expand along first row
     double det = 0.0;
     for (int col = 0; col < n; ++col) {
         // Build (n-1) x (n-1) minor — skip row 0, skip column col
-        Matrix minor(n-1, n-1);
-        for (int r = 1; r < n; ++r) {
-            int mc = 0;
+        Matrix minor(n-1, n-1); // tạo ma trận con (minor) có kích thước (n-1) x (n-1)
+        for (int r = 1; r < n; ++r) { // bỏ hàng 0 → bắt đầu từ r=1
+            int mc = 0; // mc = cột trong minor, bắt đầu từ 0
             for (int c = 0; c < n; ++c) {
-                if (c == col) continue;
+                if (c == col) continue; // bỏ cột đang xét
                 minor.mData[r-1][mc++] = mData[r][c];
             }
         }
-        double sign = (col % 2 == 0) ? 1.0 : -1.0;
+        double sign = (col % 2 == 0) ? 1.0 : -1.0; // dấu luân phiên: + - + - ...
         det += sign * mData[0][col] * minor.Determinant();
     }
     return det;
@@ -189,25 +189,26 @@ Matrix Matrix::Inverse() const {
         // Find pivot row
         int pivot = col;
         for (int row = col+1; row < n; ++row)
-            if (std::abs(aug.mData[row][col]) > std::abs(aug.mData[pivot][col]))
+            if (std::abs(aug.mData[row][col]) > std::abs(aug.mData[pivot][col])) // tìm hàng có phần tử trị tuyệt đối lớn nhất ở cột hiện tại để làm pivot
                 pivot = row;
 
         // Swap rows
-        std::swap(aug.mData[col], aug.mData[pivot]);
+        std::swap(aug.mData[col], aug.mData[pivot]); // đổi chỗ hàng col với hàng pivot để đưa phần tử lớn nhất lên vị trí pivot
+        // Mục tiêu làm sao là tìm và swap để phần tử ở vị trí (col, col) aka (đường chéo chính) có trị tuyệt đối lớn nhất có thể, giúp giảm thiểu sai số trong quá trình khử Gauss-Jordan
 
         double pivotVal = aug.mData[col][col];
-        assert(std::abs(pivotVal) > 1e-14); // singular check
+        assert(std::abs(pivotVal) > 1e-14); // singular check (giá trị pivot quá nhỏ có thể dẫn đến sai số lớn, coi như ma trận không khả nghịch : 10^-14)
 
         // Scale pivot row so diagonal becomes 1
         for (int j = 0; j < 2*n; ++j)
-            aug.mData[col][j] /= pivotVal;
+            aug.mData[col][j] /= pivotVal; // chia toàn bộ hàng pivot cho giá trị pivot để đưa phần tử trên đường chéo về 1
 
         // Eliminate all other rows in this column
         for (int row = 0; row < n; ++row) {
-            if (row == col) continue;
+            if (row == col) continue; // bỏ qua đường chéo chính (hiện có giá trị là 1)
             double factor = aug.mData[row][col];
             for (int j = 0; j < 2*n; ++j)
-                aug.mData[row][j] -= factor * aug.mData[col][j];
+                aug.mData[row][j] -= factor * aug.mData[col][j]; // trừ factor * hàng pivot từ hàng hiện tại để đưa phần tử ở cột col về 0, tiến hành khử Gauss-Jordan để biến phần bên trái (A) thành ma trận đơn vị, đồng thời phần bên phải sẽ trở thành A^{-1}
         }
     }
 
@@ -241,10 +242,10 @@ Matrix Matrix::PseudoInverse() const {
 // ── Friends ───────────────────────────────────────────────────────────────────
 
 Matrix operator*(double scalar, const Matrix& m) {
-    return m * scalar;
+    return m * scalar; // mượn operator* đã định nghĩa trong class để thực hiện phép nhân (m * scalar) thay vì viết lại logic nhân trong hàm này, giúp tránh trùng lặp mã và đảm bảo tính nhất quán
 }
 
-std::ostream& operator<<(std::ostream& os, const Matrix& m) {
+std::ostream& operator<<(std::ostream& os, const Matrix& m) { // in matrix
     for (int i = 0; i < m.mNumRows; ++i) {
         os << "[ ";
         for (int j = 0; j < m.mNumCols; ++j) {
