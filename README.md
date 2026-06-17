@@ -48,3 +48,7 @@ g++ -std=c++17 -I include -o ecommerce.exe src/main.cpp src/Product.cpp src/Cart
 
 ./ecommerce.exe
 ```
+
+Register and login to browse products, view/manage cart, checkout, get recommendations, see order history
+
+or use the admin account (username: admin, password: admin123) to view all products, to edit/add/delete product or check the system statistics
